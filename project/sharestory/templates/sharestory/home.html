@@ -1,0 +1,32 @@
+{% extends 'sharestory/base.html' %}
+{% block content %}
+    {% if user.is_authenticated %}
+        <article>
+            <a  href="{% url 'post_create' %}" class="btn btn-outline-primary float-right">
+                Create a Post
+            </a>
+            <h3>What's your story?</h3>
+        </article>
+    {% endif %}
+    {% for post in posts %}
+        <article>
+            <h6 class="float-right">Created on {{ post.date_posted|date:"d M, Y" }}</h6>
+            <h6 class="font-weight-bold">By {{ post.author }}</h6>
+            <hr/>
+            <h3>{{ post.title }}</h3>
+            <p>{{ post.content }}</p>
+            {% if user.is_authenticated %}
+                <form class="" action="{% url 'post_like' %}" method="post">
+                    {% csrf_token %}
+                    <button class="btn btn-outline-primary" name="post_id" value="{{ post.id }}">
+                        <i class="far fa-thumbs-up"></i> {{ post.likes.count }}
+                    </button>
+                </form>
+            {% else %}
+                <button class="btn btn-outline-primary" name="post_id" value="{{ post.id }}">
+                    <i class="far fa-thumbs-up"></i> {{ post.likes.count }}
+                </button>
+            {% endif %}
+        </article>
+    {% endfor %}
+{% endblock %}

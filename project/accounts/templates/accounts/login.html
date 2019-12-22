@@ -1,0 +1,19 @@
+{% extends 'sharestory/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="form-container">
+        <form method="POST">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Log In</legend>
+                {{ form|crispy }}
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline-primary" type="submit" name="button">Log In</button>
+            </div>
+            <div class="border-top pt-3 pb-1 small text-muted">
+                Need an account? <a class="ml-2" href="{% url 'signup' %}">Sign Up Now</a>
+            </div>
+        </form>
+    </div>
+{% endblock %}
